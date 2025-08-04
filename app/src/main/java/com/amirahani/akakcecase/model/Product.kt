@@ -1,4 +1,4 @@
-package com.amirahani.akakcecase.model
+package com.example.akakcecase.model
 
 data class Rating(
     val rate: Float,
