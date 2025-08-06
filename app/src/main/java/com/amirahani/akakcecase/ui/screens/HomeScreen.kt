@@ -1,49 +1,87 @@
 package com.example.akakcecase.ui.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.rememberImagePainter
 import com.amirahani.akakcecase.viewmodel.ProductViewModel
 import com.example.akakcecase.model.Product
-import com.example.akakcecase.ui.component.ProductCard
+import com.example.akakcecase.ui.component.VerticalProductCard
+import com.example.akakcecase.ui.component.HorizontalProductCard
+import com.google.accompanist.pager.*
+import kotlinx.coroutines.launch
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.asPaddingValues
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
-fun HomeScreen(viewModel: ProductViewModel = viewModel(), onProductClick: (Product) -> Unit) {
+fun HomeScreen(
+    viewModel: ProductViewModel = viewModel(),
+    onProductClick: (Product) -> Unit
+) {
     val allProducts by viewModel.allProducts.collectAsState()
     val horizontalProducts by viewModel.horizontalProducts.collectAsState()
 
-    // Fetch once when Composable loads
+    val pagerState = rememberPagerState()
+    val coroutineScope = rememberCoroutineScope()
+
     LaunchedEffect(Unit) {
         viewModel.fetchProducts()
     }
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text("Horizontal Products", style = MaterialTheme.typography.headlineSmall)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(
+                WindowInsets.statusBars
+                    .only(WindowInsetsSides.Top)
+                    .asPaddingValues()
+            )
+            .padding(horizontal = 16.dp, vertical = 12.dp)
+    ) {
+        Text(
+            text = "Featured Products",
+            style = MaterialTheme.typography.headlineSmall,
+        )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
-        LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            items(horizontalProducts) { product ->
-                ProductCard(product, onProductClick)
+        if (horizontalProducts.isNotEmpty()) {
+            HorizontalPager(
+                count = horizontalProducts.size,
+                state = pagerState,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(220.dp) // optionally increased for more space
+            ) { page ->
+                HorizontalProductCard(product = horizontalProducts[page])
             }
+
+            HorizontalPagerIndicator(
+                pagerState = pagerState,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 8.dp, bottom = 16.dp)
+            )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = "All Products",
+            style = MaterialTheme.typography.headlineSmall,
+        )
 
-        Text("All Products", style = MaterialTheme.typography.headlineSmall)
-
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
@@ -52,7 +90,7 @@ fun HomeScreen(viewModel: ProductViewModel = viewModel(), onProductClick: (Produ
             modifier = Modifier.fillMaxHeight()
         ) {
             items(allProducts) { product ->
-                ProductCard(product, onProductClick)
+                VerticalProductCard(product = product, onClick = onProductClick)
             }
         }
     }
