@@ -1,2 +1,2 @@
 # akakce-case-study
-Akakce mobile case study project for internship.
+Akakce mobile case study project for internship. made by kotlin and compose.
