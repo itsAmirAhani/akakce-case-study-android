@@ -19,8 +19,7 @@ import com.example.akakcecase.model.Product
 import com.example.akakcecase.ui.component.HorizontalProductCard
 import com.example.akakcecase.ui.component.VerticalProductCard
 import com.google.accompanist.pager.*
-
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun HomeScreen(
     viewModel: ProductViewModel,
@@ -28,98 +27,89 @@ fun HomeScreen(
 ) {
     val allProducts by viewModel.allProducts.collectAsState()
     val horizontalProducts by viewModel.horizontalProducts.collectAsState()
+
     val pagerState = rememberPagerState()
 
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        "ShopEase",
-                        style = MaterialTheme.typography.titleLarge.copy(
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    )
-                }
+    // ✅ Take only first 5 products
+    val featuredProducts = horizontalProducts.take(5)
+
+    // ✅ Group into pages of 2 products
+    val groupedProducts = featuredProducts.chunked(2)
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(
+                WindowInsets.statusBars
+                    .only(WindowInsetsSides.Top)
+                    .asPaddingValues()
             )
-        }
-    ) { inner ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(inner)
-                .padding(horizontal = 16.dp, vertical = 12.dp)
-        ) {
-            SectionHeader("Featured Products")
-
-            Spacer(Modifier.height(8.dp))
-
-            if (horizontalProducts.isNotEmpty()) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(220.dp)
-                        .clip(MaterialTheme.shapes.extraLarge)
-                        .background(
-                            Brush.verticalGradient(
-                                listOf(
-                                    MaterialTheme.colorScheme.surfaceVariant.copy(alpha = .55f),
-                                    MaterialTheme.colorScheme.surface
-                                )
-                            )
-                        )
-                        .padding(6.dp)
-                ) {
-                    HorizontalPager(
-                        count = horizontalProducts.size,
-                        state = pagerState,
-                        modifier = Modifier.fillMaxSize()
-                    ) { page ->
-                        // your card supports onClick
-                        HorizontalProductCard(
-                            product = horizontalProducts[page],
-                            onClick = onProductClick
-                        )
-                    }
-                }
-
-                HorizontalPagerIndicator(
-                    pagerState = pagerState,
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(top = 10.dp, bottom = 14.dp)
-                )
-            }
-
-            SectionHeader("All Products")
-
-            Spacer(Modifier.height(8.dp))
-
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(bottom = 18.dp),
-                modifier = Modifier.fillMaxHeight()
-            ) {
-                items(allProducts) { product ->
-                    VerticalProductCard(product = product, onClick = onProductClick)
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun SectionHeader(title: String) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
         Text(
-            text = title,
-            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold)
+            text = "Featured Products",
+            style = MaterialTheme.typography.headlineSmall
         )
-        Spacer(Modifier.weight(1f))
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        if (groupedProducts.isNotEmpty()) {
+            HorizontalPager(
+                count = horizontalProducts.chunked(2).size,
+                state = pagerState,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp) // slightly smaller than before
+                    .padding(horizontal = 4.dp) // remove vertical padding here
+            ) { page ->
+                val pair = horizontalProducts.chunked(2)[page]
+                Row(
+                    Modifier.fillMaxSize(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp) // smaller gap between cards
+                ) {
+                    HorizontalProductCard(
+                        product = pair[0],
+                        onClick = onProductClick,
+                        modifier = Modifier.weight(1f)
+                    )
+                    if (pair.size == 2) {
+                        HorizontalProductCard(
+                            product = pair[1],
+                            onClick = onProductClick,
+                            modifier = Modifier.weight(1f)
+                        )
+                    } else {
+                        Spacer(Modifier.weight(1f))
+                    }
+                }
+            }
+
+            HorizontalPagerIndicator(
+                pagerState = pagerState,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 0.1.dp) // much smaller gap
+            )
+
+        }
+
+        Text(
+            text = "All Products",
+            style = MaterialTheme.typography.headlineSmall
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier.fillMaxHeight(),
+            contentPadding = PaddingValues(bottom = 12.dp)
+        ) {
+            items(allProducts) { product ->
+                VerticalProductCard(product = product, onClick = onProductClick)
+            }
+        }
     }
 }
