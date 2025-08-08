@@ -1,79 +1,94 @@
 package com.example.akakcecase.ui.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.akakcecase.model.Product
 
 @Composable
-fun VerticalProductCard(product: Product, onClick: (Product) -> Unit) {
-    Card(
+fun VerticalProductCard(
+    product: Product,
+    onClick: (Product) -> Unit
+) {
+    ElevatedCard(
         modifier = Modifier
-            .padding(4.dp)
             .fillMaxWidth()
             .clickable { onClick(product) },
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        shape = RoundedCornerShape(14.dp)
     ) {
         Row(
             modifier = Modifier
-                .padding(8.dp)
+                .padding(10.dp)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
-                model = product.image,
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(product.image)
+                    .crossfade(true)
+                    .build(),
                 contentDescription = product.title,
                 modifier = Modifier
-                    .size(60.dp)
-                    .padding(end = 8.dp)
+                    .size(70.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
             )
 
-            Column(
-                modifier = Modifier.fillMaxWidth()
-            ) {
+            Spacer(Modifier.width(10.dp))
+
+            Column(Modifier.weight(1f)) {
                 Text(
                     text = product.title,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 12.sp,
-                    color = Color(0xFF1E88E5),
-                    maxLines = 2
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.SemiBold
+                    )
                 )
 
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Text(
-                    text = "$${product.price}",
-                    color = Color.Black,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 15.sp
-                )
-
-                Spacer(modifier = Modifier.height(2.dp))
+                Spacer(Modifier.height(6.dp))
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Default.Star,
-                        contentDescription = "Rating",
+                        contentDescription = null,
                         tint = Color(0xFFFFC107),
                         modifier = Modifier.size(16.dp)
                     )
+                    Spacer(Modifier.width(4.dp))
                     Text(
-                        text = "${product.rating.rate} (${product.rating.count})",
-                        fontSize = 12.sp,
-                        color = Color.Gray,
-                        modifier = Modifier.padding(start = 4.dp)
+                        text = "${product.rating.rate}  (${product.rating.count})",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
+
+                Spacer(Modifier.height(6.dp))
+
+                Text(
+                    text = "$${product.price}",
+                    style = MaterialTheme.typography.titleSmall.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                )
             }
         }
     }

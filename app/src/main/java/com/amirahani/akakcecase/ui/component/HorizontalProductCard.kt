@@ -51,12 +51,13 @@ fun HorizontalProductCard(
                     text = product.title,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Medium,
-                    color = Color(0xFF1E88E5),
+                    // Changed to same purple as vertical cards
+                    color = MaterialTheme.colorScheme.primary,
                     maxLines = 2
                 )
                 Text(
                     text = "$${product.price}",
-                    fontSize = 26.sp,
+                    fontSize = 36.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
                 )
