@@ -75,7 +75,7 @@ fun ProductDetailScreen(
                 text = "$${product.price}",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
+                color = Color.Black
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -98,17 +98,7 @@ fun ProductDetailScreen(
                 color = Color.DarkGray
             )
 
-            Spacer(modifier = Modifier.height(24.dp))
 
-            Button(
-                onClick = { /* Add to Cart */ },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-                shape = RoundedCornerShape(8.dp)
-            ) {
-                Text("Add to Cart", fontSize = 18.sp)
-            }
         }
     }
 }
