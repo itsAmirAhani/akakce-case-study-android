@@ -1,4 +1,4 @@
-package com.example.akakcecase.model
+package com.amirahani.casestudy.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

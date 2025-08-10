@@ -1,4 +1,4 @@
-package com.example.akakcecase.network
+package com.amirahani.casestudy.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

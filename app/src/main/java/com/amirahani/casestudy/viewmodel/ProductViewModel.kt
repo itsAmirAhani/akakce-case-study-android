@@ -1,10 +1,10 @@
-package com.amirahani.akakcecase.viewmodel
+package com.amirahani.casestudy.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.akakcecase.model.Product
-import com.example.akakcecase.network.ApiService
-import com.example.akakcecase.network.RetrofitClient
+import com.amirahani.casestudy.model.Product
+import com.amirahani.casestudy.network.ApiService
+import com.amirahani.casestudy.network.RetrofitClient
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

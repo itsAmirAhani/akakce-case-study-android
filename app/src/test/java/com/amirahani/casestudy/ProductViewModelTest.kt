@@ -1,10 +1,10 @@
-package com.amirahani.akakcecase
+package com.amirahani.casestudy
 
 import app.cash.turbine.test
-import com.amirahani.akakcecase.viewmodel.ProductViewModel
-import com.example.akakcecase.model.Product
-import com.example.akakcecase.model.Rating
-import com.example.akakcecase.network.ApiService
+import com.amirahani.casestudy.viewmodel.ProductViewModel
+import com.amirahani.casestudy.model.Product
+import com.amirahani.casestudy.model.Rating
+import com.amirahani.casestudy.network.ApiService
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

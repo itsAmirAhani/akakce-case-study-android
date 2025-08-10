@@ -1,4 +1,4 @@
-package com.example.akakcecase.ui.component
+package com.amirahani.casestudy.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,19 +15,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.akakcecase.model.Product
+import com.amirahani.casestudy.model.Product
 
 @Composable
 fun VerticalProductCard(
     product: Product,
-    onClick: (Product) -> Unit
+    onClick: ((Product) -> Unit)? = null,   // ← now optional
+    modifier: Modifier = Modifier
 ) {
+    // only add clickable if onClick != null
+    val clickable = if (onClick != null) {
+        Modifier.clickable { onClick(product) }
+    } else {
+        Modifier
+    }
+
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .clickable { onClick(product) },
+            .then(clickable),
         shape = RoundedCornerShape(14.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)

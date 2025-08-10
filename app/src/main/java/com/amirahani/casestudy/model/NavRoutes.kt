@@ -1,4 +1,4 @@
-package com.amirahani.akakcecase.model
+package com.amirahani.casestudy.model
 
 object NavRoutes {
     const val HOME = "home"

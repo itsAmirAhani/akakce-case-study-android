@@ -1,4 +1,4 @@
-package com.amirahani.akakcecase
+package com.amirahani.casestudy
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -1,4 +1,4 @@
-package com.example.akakcecase.ui.component
+package com.amirahani.casestudy.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,7 +21,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.akakcecase.model.Product
+import com.amirahani.casestudy.model.Product
 
 @Composable
 fun HorizontalProductCard(

@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.amirahani.akakcecase"
+    namespace = "com.amirahani.casestudy"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.amirahani.akakcecase"
+        applicationId = "com.amirahani.casestudy"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

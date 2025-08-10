@@ -1,6 +1,6 @@
-package com.example.akakcecase.network
+package com.amirahani.casestudy.network
 
-import com.example.akakcecase.model.Product
+import com.amirahani.casestudy.model.Product
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

@@ -1,4 +1,4 @@
-package com.amirahani.akakcecase
+package com.amirahani.casestudy
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,10 +13,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.amirahani.akakcecase.model.NavRoutes
-import com.amirahani.akakcecase.viewmodel.ProductViewModel
-import com.example.akakcecase.ui.screens.HomeScreen
-import com.example.akakcecase.ui.screens.ProductDetailScreen
+import com.amirahani.casestudy.model.NavRoutes
+import com.amirahani.casestudy.viewmodel.ProductViewModel
+import com.amirahani.casestudy.ui.screens.HomeScreen
+import com.amirahani.casestudy.ui.screens.ProductDetailScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
