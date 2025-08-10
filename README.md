@@ -1,4 +1,4 @@
-# 📱 Akakce-Android
+# Case Study Android
 
 A mobile case study project for internship purposes, developed using **Kotlin** and **Jetpack Compose**.  
 The app displays product listings, featured products, and detailed product information with a clean, modern UI inspired by major e-commerce platforms.
